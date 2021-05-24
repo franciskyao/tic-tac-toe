@@ -21,10 +21,28 @@ var gridMethods = {
       }
       gridMethods.grid.push(rows)
     }
+  },
+
+  removeAllMarks: function () {
+    for (var row = 0; row < 3; row++) {
+      for (var column = 0; column < 3; column++) {
+        gridMethods.grid[row][column].mark = null;
+      }
+    }
+  },
+
+  displayGridOnConsole: function() {
+    for (var row = 0; row < 3; row++) {
+      for (var column = 0; column < 3; column++) {
+        console.log(`|| RC:${row}${column} ${gridMethods.grid[row][column].mark} ||`);
+      }
+      console.log('\n')
+    }
   }
 };
 
 gridMethods.createEmptyGrid();
+gridMethods.displayGridOnConsole();
 
 
 
