@@ -74,41 +74,36 @@ gridMethods.createEmptyGrid();
 // gridMethods.displayGridOnConsole();
 
 //########## View ##########
-/*
-display grid
-display X O
-display refresh button
-*/
+
+var grid = document.createElement('table');
+var message = document.createElement('div');
 
 var displayGrid = function() {
-  var grid = document.createElement('table');
-  var message = document.createElement('div');
-
-  grid.setAttribute('id', 'grid');
-  message.setAttribute('id', 'message');
-
-  document.body.appendChild(grid);
-  document.body.appendChild(message);
-
   for (var row = 0; row < 3; row++) {
-    var tableRow = document.createElement('tr')
-    tableRow.setAttribute('id', `R${row}`)
+    var tableRow = document.createElement('tr');
+
+    tableRow.setAttribute('id', `R${row}`);
     document.getElementById('grid').appendChild(tableRow);
+
     for (var column = 0; column < 3; column++) {
-      var rowColumn = `${row}-${column}`
+      var rowColumn = `${row}-${column}`;
       var mark = gridMethods.getMarkOn(rowColumn);
       var columnElement = document.createElement('th');
 
       columnElement.setAttribute('id', `${rowColumn}`);
-      columnElement.innerHTML = `${mark}`
+      columnElement.innerHTML = `${mark}`;
       tableRow.appendChild(columnElement);
     }
 
     tableRow.appendChild(columnElement);
-    // document.getElementb=ById(`R${row}`).appendChild(tableRow)
   }
 }
 
+
+grid.setAttribute('id', 'grid');
+message.setAttribute('id', 'message');
+document.body.appendChild(grid);
+document.body.appendChild(message)
 displayGrid();
 
 //####### Controller #######
