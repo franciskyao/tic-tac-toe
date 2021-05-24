@@ -1,14 +1,18 @@
 console.log('app.js loaded!')
 
 
-  //######### Model #########
+/*
+##########################
+######### Model ##########
+##########################
+*/
 
-  /*
-  Store data in 3 x 3 grid
-  R0-C0 || R0-C1 || R0-C2
-  R1-C0 || R1-C1 || R1-C2
-  R2-C0 || R2-C1 || R2-C2
-  */
+/*
+Store data in 3 x 3 grid
+R0-C0 || R0-C1 || R0-C2
+R1-C0 || R1-C1 || R1-C2
+R2-C0 || R2-C1 || R2-C2
+*/
 
 var gridMethods = {
   grid: [],
@@ -73,7 +77,11 @@ var xTurn = true;
 gridMethods.createEmptyGrid();
 // gridMethods.displayGridOnConsole();
 
-//########## View ##########
+/*
+##########################
+########## View ##########
+##########################
+*/
 
 var grid = document.createElement('table');
 var message = document.createElement('div');
@@ -99,6 +107,13 @@ var displayGrid = function() {
   }
 }
 
+var displayMessage = function() {
+};
+
+var changeDisplayedMarkOn = function(rowColumn) {
+  var mark = gridMethods.getMarkOn(rowColumn);
+  document.getElementById(rowColumn).innerHTML = `${mark}`;
+}
 
 grid.setAttribute('id', 'grid');
 message.setAttribute('id', 'message');
@@ -106,9 +121,29 @@ document.body.appendChild(grid);
 document.body.appendChild(message)
 displayGrid();
 
-//####### Controller #######
 /*
-Handles X and O input
-Handles refresh page button input
-
+##########################
+####### Controller #######
+##########################
 */
+//on click,
+//change data on grid
+//re render new data
+
+document.getElementById('grid').onclick = function(event) {
+  var rowColumn = event.target.id;
+  var mark = null;
+  if (xTurn) {
+    mark = 'X';
+    xTurn = !xTurn;
+  } else {
+    mark = '0';
+    xTurn = !xTurn;
+  }
+  console.log(mark)
+  gridMethods.changeMarkOn(rowColumn, mark);
+  changeDisplayedMarkOn(rowColumn);
+}
+
+// Handles X and O input
+// Handles refresh page button input
