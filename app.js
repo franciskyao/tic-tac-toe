@@ -63,11 +63,50 @@ var gridMethods = {
     return gridMethods.grid[row][column].mark;
   },
 
-  getRowColumnInfo: function (rowColumn){
+  didRowMatch: function(rowColumn) {
+    var mark = gridMethods.getMarkOn(rowColumn);
     rowColumn = rowColumn.split('-');
     var row = parseInt(rowColumn[0]);
+    for (var column = 0; column < 3; column++) {
+      if (gridMethods.grid[row][column].mark !== mark) {
+        return false;
+      }
+    }
+    return true;
+  },
+
+  didColumnMatch: function(rowColumn) {
+    var mark = gridMethods.getMarkOn(rowColumn);
+    rowColumn = rowColumn.split('-');
     var column = parseInt(rowColumn[1]);
-    return gridMethods.grid[row][column];
+    for (var row = 0; row < 3; row++) {
+      if (gridMethods.grid[row][column].mark !== mark) {
+        return false;
+      }
+    }
+    return true;
+
+
+  },
+  didMinorDiagMatch: function (rowColumn) {
+
+  },
+
+  didMajorDiagMatch: function (rowColumn) {
+
+  },
+
+  didAnyDirMatch: function (rowColumn) {
+    console.log(rowColumn)
+    console.log(gridMethods.didRowMatch(rowColumn))
+    if (gridMethods.didRowMatch(rowColumn) ||
+    gridMethods.didColumnMatch(rowColumn) ||
+    gridMethods.didMinorDiagMatch(rowColumn) ||
+    gridMethods.didMajorDiagMatch(rowColumn)) {
+      return true;
+    } else {
+      false;
+    }
   }
 
 };
@@ -112,7 +151,7 @@ var displayMessage = {
   },
 
   winner: function(player) {
-    var winnerMessage = document.create('p');
+    var winnerMessage = document.createElement('p');
     winnerMessage.innerHTML = `The winner is ${player} player!!!`;
     message.appendChild(winnerMessage);
   },
@@ -122,13 +161,12 @@ var displayMessage = {
     illegalMessage.innerHTML = `Player ${player} Committed an illegal move. Please try again.`;
     message.appendChild(illegalMessage);
   },
+
   yourTurn: function (player) {
     var yourTurnMessage = document.createElement('p');
     yourTurnMessage.innerHTML = `It is ${player}'s Turn `;
     message.appendChild(yourTurnMessage);
-
   }
-
 };
 
 var changeDisplayedMarkOn = function(rowColumn) {
@@ -147,40 +185,34 @@ displayGrid();
 ####### Controller #######
 ##########################
 */
-//on click,
-//change data on grid
-//re render new data
 
 var isMoveValid = function (rowColumn) {
   return !gridMethods.getMarkOn(rowColumn);
 }
 
-var nextTurn = function() {
-  if (!xTurn) {
-    return 'O';
-  } else {
+var whosTurn = function(boolean) {
+  if (boolean) {
     return 'X';
+  } else {
+    return 'O';
   }
 }
 
 document.getElementById('grid').onclick = function(event) {
   var rowColumn = event.target.id;
-  var mark = null;
-
-  if (xTurn) {
-    mark = 'X';
-  } else {
-    mark = 'O';
-  }
+  var mark = whosTurn(xTurn);
+  displayMessage.clearMessage();
 
   if (isMoveValid(rowColumn)) {
     gridMethods.changeMarkOn(rowColumn, mark);
     changeDisplayedMarkOn(rowColumn);
-    displayMessage.clearMessage();
-    xTurn = !xTurn;
-    displayMessage.yourTurn(nextTurn());
+    if (gridMethods.didAnyDirMatch(rowColumn)) {
+      displayMessage.winner(mark);
+    } else {
+      xTurn = !xTurn;
+      displayMessage.yourTurn(whosTurn(xTurn));
+    }
   } else {
-    displayMessage.clearMessage();
     displayMessage.illegalMove(mark);
   }
 }
