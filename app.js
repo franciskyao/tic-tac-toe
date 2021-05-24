@@ -53,7 +53,7 @@ var gridMethods = {
     rowColumn = rowColumn.split('-');
     var row = parseInt(rowColumn[0]);
     var column = parseInt(rowColumn[1]);
-    gridMethods.grid[row][column] = mark;
+    gridMethods.grid[row][column].mark = mark;
   },
 
   getMarkOn: function(rowColumn) {
@@ -75,7 +75,6 @@ var gridMethods = {
 var xTurn = true;
 
 gridMethods.createEmptyGrid();
-// gridMethods.displayGridOnConsole();
 
 /*
 ##########################
@@ -130,19 +129,27 @@ displayGrid();
 //change data on grid
 //re render new data
 
+var isMoveValid = function (rowColumn) {
+  console.log(!gridMethods.getMarkOn(rowColumn))
+  return !gridMethods.getMarkOn(rowColumn);
+}
+
 document.getElementById('grid').onclick = function(event) {
   var rowColumn = event.target.id;
   var mark = null;
-  if (xTurn) {
-    mark = 'X';
-    xTurn = !xTurn;
+  if (isMoveValid(rowColumn)) {
+    if (xTurn) {
+      mark = 'X';
+      xTurn = !xTurn;
+    } else {
+      mark = '0';
+      xTurn = !xTurn;
+    }
+    gridMethods.changeMarkOn(rowColumn, mark);
+    changeDisplayedMarkOn(rowColumn);
   } else {
-    mark = '0';
-    xTurn = !xTurn;
+    console.log('Move not valid!')
   }
-  console.log(mark)
-  gridMethods.changeMarkOn(rowColumn, mark);
-  changeDisplayedMarkOn(rowColumn);
 }
 
 // Handles X and O input
