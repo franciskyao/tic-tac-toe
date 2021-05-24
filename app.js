@@ -1,25 +1,30 @@
 console.log('app.js loaded!')
 
-//######### Model #########
 
-/*
-Store data in 3 x 3 grid
-R0-C0 || R0-C1 || R0-C2
-R1-C0 || R1-C1 || R1-C2
-R2-C0 || R2-C1 || R2-C2
-*/
+  //######### Model #########
+
+  /*
+  Store data in 3 x 3 grid
+  R0-C0 || R0-C1 || R0-C2
+  R1-C0 || R1-C1 || R1-C2
+  R2-C0 || R2-C1 || R2-C2
+  */
 
 var gridMethods = {
   grid: [],
+
+  getGrid: function () {
+    return gridMethods.grid;
+  }
 
   createEmptyGrid: function () {
     for (var row = 0; row < 3; row++) {
       var rows = [];
       for (var column = 0; column < 3; column++) {
-        var rowColumnName = `R${row}-C${column}`;
-        rows.push({name: rowColumnName, mark: null})
+        var rowColumnName = `${row}-${column}`;
+        rows.push({name: rowColumnName, mark: null});
       }
-      gridMethods.grid.push(rows)
+      gridMethods.grid.push(rows);
     }
   },
 
@@ -36,15 +41,28 @@ var gridMethods = {
       for (var column = 0; column < 3; column++) {
         console.log(`|| RC:${row}${column} ${gridMethods.grid[row][column].mark} ||`);
       }
-      console.log('\n')
+      console.log('\n');
     }
-  }
+  },
+
+  changeMarkOn: function(rowColumn, mark) {
+    rowColumn = rowColumn.split('-');
+    var row = parseInt(rowColumn[0]);
+    var column = parseInt(rowColumn[1]);
+    gridMethods.grid[row][column] = mark;
+  },
+
+  getRowColumnInfo = function (rowColumn)
+  rowColumn = rowColumn.split('-');
+  var row = parseInt(rowColumn[0]);
+  var column = parseInt(rowColumn[1]);
+  return gridMethods.grid[row][column];
 };
+
+var xTurn = true;
 
 gridMethods.createEmptyGrid();
 gridMethods.displayGridOnConsole();
-
-
 
 //########## View ##########
 /*
