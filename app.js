@@ -15,7 +15,7 @@ var gridMethods = {
 
   getGrid: function () {
     return gridMethods.grid;
-  }
+  },
 
   createEmptyGrid: function () {
     for (var row = 0; row < 3; row++) {
@@ -52,17 +52,26 @@ var gridMethods = {
     gridMethods.grid[row][column] = mark;
   },
 
-  getRowColumnInfo = function (rowColumn)
-  rowColumn = rowColumn.split('-');
-  var row = parseInt(rowColumn[0]);
-  var column = parseInt(rowColumn[1]);
-  return gridMethods.grid[row][column];
+  getMarkOn: function(rowColumn) {
+    rowColumn = rowColumn.split('-');
+    var row = parseInt(rowColumn[0]);
+    var column = parseInt(rowColumn[1]);
+    return gridMethods.grid[row][column];
+  },
+
+  getRowColumnInfo: function (rowColumn){
+    rowColumn = rowColumn.split('-');
+    var row = parseInt(rowColumn[0]);
+    var column = parseInt(rowColumn[1]);
+    return gridMethods.grid[row][column];
+  }
+
 };
 
 var xTurn = true;
 
 gridMethods.createEmptyGrid();
-gridMethods.displayGridOnConsole();
+// gridMethods.displayGridOnConsole();
 
 //########## View ##########
 /*
@@ -71,26 +80,35 @@ display X O
 display refresh button
 */
 
-var displayGrid = function() (
-  // var buttons = document.createElement('div')
-  // var resetButton = document.createElement('button')
-  var grid = document.createElement('div');
+var displayGrid = function() {
+  var grid = document.createElement('table');
   var message = document.createElement('div');
 
-
-  // buttons.setAttribute('id', 'reset');
   grid.setAttribute('id', 'grid');
   message.setAttribute('id', 'message');
 
-  // document.body appendChild(buttons)
-  document.body appendChild(grid)
-  document.body appendChild(buttons)
+  document.body.appendChild(grid);
+  document.body.appendChild(message);
+
   for (var row = 0; row < 3; row++) {
+    var tableRow = document.createElement('tr')
+    tableRow.setAttribute('id', `R${row}`)
+    console.log(tableRow);
     for (var column = 0; column < 3; column++) {
-      grid.appendChild()
+      // var rowName = document.getElementsByClassName(`R${row}`);
+      console.log(typeof rowName)
+      var rowColumn = `${row}-${column}`
+      var mark = gridMethods.getMarkOn(rowColumn);
+      var column = document.createElement('th');
+      column.setAttribute('id', `${rowColumn}`);
+      column.innerHTML = `${mark}`
+      tableRow.appendChild(column);
     }
+    grid.appendChild(tableRow)
   }
-)
+}
+
+displayGrid();
 
 //####### Controller #######
 /*
