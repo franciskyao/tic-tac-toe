@@ -1,15 +1,38 @@
-console.log('app.js is loaded!')
+console.log('app.js loaded!')
 
-//####### Model #######
+//######### Model #########
+
 /*
 Store data in 3 x 3 grid
+R0-C0 || R0-C1 || R0-C2
+R1-C0 || R1-C1 || R1-C2
+R2-C0 || R2-C1 || R2-C2
 */
 
-//####### View #######
+var gridMethods = {
+  grid: [],
+
+  createEmptyGrid: function () {
+    for (var row = 0; row < 3; row++) {
+      var rows = [];
+      for (var column = 0; column < 3; column++) {
+        var rowColumnName = `R${row}-C${column}`;
+        rows.push({name: rowColumnName, mark: null})
+      }
+      gridMethods.grid.push(rows)
+    }
+  }
+};
+
+gridMethods.createEmptyGrid();
+
+
+
+//########## View ##########
 /*
-Display Grid
-Display X O
-Display Refresh Button
+display grid
+display X O
+display refresh button
 */
 
 //####### Controller #######
