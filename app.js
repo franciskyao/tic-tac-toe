@@ -56,7 +56,7 @@ var gridMethods = {
     rowColumn = rowColumn.split('-');
     var row = parseInt(rowColumn[0]);
     var column = parseInt(rowColumn[1]);
-    return gridMethods.grid[row][column];
+    return gridMethods.grid[row][column].mark;
   },
 
   getRowColumnInfo: function (rowColumn){
@@ -93,18 +93,19 @@ var displayGrid = function() {
   for (var row = 0; row < 3; row++) {
     var tableRow = document.createElement('tr')
     tableRow.setAttribute('id', `R${row}`)
-    console.log(tableRow);
+    document.getElementById('grid').appendChild(tableRow);
     for (var column = 0; column < 3; column++) {
-      // var rowName = document.getElementsByClassName(`R${row}`);
-      console.log(typeof rowName)
       var rowColumn = `${row}-${column}`
       var mark = gridMethods.getMarkOn(rowColumn);
-      var column = document.createElement('th');
-      column.setAttribute('id', `${rowColumn}`);
-      column.innerHTML = `${mark}`
-      tableRow.appendChild(column);
+      var columnElement = document.createElement('th');
+
+      columnElement.setAttribute('id', `${rowColumn}`);
+      columnElement.innerHTML = `${mark}`
+      tableRow.appendChild(columnElement);
     }
-    grid.appendChild(tableRow)
+
+    tableRow.appendChild(columnElement);
+    // document.getElementb=ById(`R${row}`).appendChild(tableRow)
   }
 }
 
