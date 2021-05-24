@@ -71,6 +71,27 @@ display X O
 display refresh button
 */
 
+var displayGrid = function() (
+  // var buttons = document.createElement('div')
+  // var resetButton = document.createElement('button')
+  var grid = document.createElement('div');
+  var message = document.createElement('div');
+
+
+  // buttons.setAttribute('id', 'reset');
+  grid.setAttribute('id', 'grid');
+  message.setAttribute('id', 'message');
+
+  // document.body appendChild(buttons)
+  document.body appendChild(grid)
+  document.body appendChild(buttons)
+  for (var row = 0; row < 3; row++) {
+    for (var column = 0; column < 3; column++) {
+      grid.appendChild()
+    }
+  }
+)
+
 //####### Controller #######
 /*
 Handles X and O input
