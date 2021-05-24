@@ -106,7 +106,29 @@ var displayGrid = function() {
   }
 }
 
-var displayMessage = function() {
+var displayMessage = {
+  clearMessage: function() {
+    document.getElementById('message').innerHTML = '';
+  },
+
+  winner: function(player) {
+    var winnerMessage = document.create('p');
+    winnerMessage.innerHTML = `The winner is ${player} player!!!`;
+    message.appendChild(winnerMessage);
+  },
+
+  illegalMove: function (player) {
+    var illegalMessage = document.createElement('p');
+    illegalMessage.innerHTML = `Player ${player} Committed an illegal move. Please try again.`;
+    message.appendChild(illegalMessage);
+  },
+  yourTurn: function (player) {
+    var yourTurnMessage = document.createElement('p');
+    yourTurnMessage.innerHTML = `It is ${player}'s Turn `;
+    message.appendChild(yourTurnMessage);
+
+  }
+
 };
 
 var changeDisplayedMarkOn = function(rowColumn) {
@@ -130,25 +152,36 @@ displayGrid();
 //re render new data
 
 var isMoveValid = function (rowColumn) {
-  console.log(!gridMethods.getMarkOn(rowColumn))
   return !gridMethods.getMarkOn(rowColumn);
+}
+
+var nextTurn = function() {
+  if (!xTurn) {
+    return 'O';
+  } else {
+    return 'X';
+  }
 }
 
 document.getElementById('grid').onclick = function(event) {
   var rowColumn = event.target.id;
   var mark = null;
+
+  if (xTurn) {
+    mark = 'X';
+  } else {
+    mark = 'O';
+  }
+
   if (isMoveValid(rowColumn)) {
-    if (xTurn) {
-      mark = 'X';
-      xTurn = !xTurn;
-    } else {
-      mark = '0';
-      xTurn = !xTurn;
-    }
     gridMethods.changeMarkOn(rowColumn, mark);
     changeDisplayedMarkOn(rowColumn);
+    displayMessage.clearMessage();
+    xTurn = !xTurn;
+    displayMessage.yourTurn(nextTurn());
   } else {
-    console.log('Move not valid!')
+    displayMessage.clearMessage();
+    displayMessage.illegalMove(mark);
   }
 }
 
