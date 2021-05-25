@@ -1,5 +1,4 @@
-console.log('app.js loaded!')
-
+console.log('app.js loaded!');
 
 /*
 ##########################
@@ -7,12 +6,17 @@ console.log('app.js loaded!')
 ##########################
 */
 
-/*
-Store data in 3 x 3 grid
-R0-C0 || R0-C1 || R0-C2
-R1-C0 || R1-C1 || R1-C2
-R2-C0 || R2-C1 || R2-C2
-*/
+var player = {
+  X: {name: 'Ecks', win: 0},
+  O: {name: 'Oh', win: 0},
+
+  changeName: function(xo, newName) {
+    player[xo].name = name;
+  },
+  addWin: function(xo) {
+    player[xo].win++;
+  }
+};
 
 var gridMethods = {
   grid: [],
@@ -113,7 +117,6 @@ var gridMethods = {
       false;
     }
   }
-
 };
 
 var xTurn = true;
