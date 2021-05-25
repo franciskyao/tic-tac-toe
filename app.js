@@ -14,6 +14,10 @@ var playerMethods = {
     return playerMethods[xo].name;
   },
 
+  getWins: function(xo) {
+    return playerMethods[xo].win;
+  },
+
   changeName: function(xo, newName) {
     player[xo].name = name;
   },
@@ -135,6 +139,7 @@ gridMethods.createEmptyGrid();
 
 var grid = document.createElement('table');
 var message = document.createElement('div');
+var tally = document.createElement('div');
 
 var displayGrid = function() {
   for (var row = 0; row < 3; row++) {
@@ -192,11 +197,38 @@ var changeDisplayedMarkOn = function(rowColumn) {
   document.getElementById(rowColumn).innerHTML = `${mark}`;
 }
 
+var displayDefaultName = function() {
+  var playerXElement = document.createElement('p');
+  var playerOElement = document.createElement('p');
+  var nameX = playerMethods.getName('X');
+  var winX = playerMethods.getWins('X')
+  var nameO = playerMethods.getName('O');
+  var winO = playerMethods.getWins('O')
+  console.log(nameX)
+  playerXElement.setAttribute('id', 'X');
+  playerOElement.setAttribute('id', 'O');
+  playerXElement.innerHTML = `${nameX}: ${winX}`;
+  playerOElement.innerHTML = `${nameO}: ${winO}`;
+  tally.appendChild(playerXElement);
+  tally.appendChild(playerOElement);
+}
+
+var updateDisplayTally = function(xo) {
+
+};
+
+var updateDisplayName = function(xo) {
+
+};
+
+tally.setAttribute('id', 'tally');
 grid.setAttribute('id', 'grid');
 message.setAttribute('id', 'message');
+document.body.appendChild(tally);
 document.body.appendChild(grid);
 document.body.appendChild(message)
 displayGrid();
+displayDefaultName();
 
 /*
 ##########################
