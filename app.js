@@ -17,11 +17,11 @@ R2-C0 || R2-C1 || R2-C2
 var gridMethods = {
   grid: [],
 
-  getGrid: function () {
+  getGrid: function() {
     return gridMethods.grid;
   },
 
-  createEmptyGrid: function () {
+  createEmptyGrid: function() {
     for (var row = 0; row < 3; row++) {
       var rows = [];
       for (var column = 0; column < 3; column++) {
@@ -32,20 +32,11 @@ var gridMethods = {
     }
   },
 
-  removeAllMarks: function () {
+  removeAllMarks: function() {
     for (var row = 0; row < 3; row++) {
       for (var column = 0; column < 3; column++) {
-        gridMethods.grid[row][column].mark = null;
+        gridMethods.grid[row][column].mark = 'null';
       }
-    }
-  },
-
-  displayGridOnConsole: function() {
-    for (var row = 0; row < 3; row++) {
-      for (var column = 0; column < 3; column++) {
-        console.log(`|| RC:${row}${column} ${gridMethods.grid[row][column].mark} ||`);
-      }
-      console.log('\n');
     }
   },
 
@@ -85,20 +76,34 @@ var gridMethods = {
       }
     }
     return true;
-
-
-  },
-  didMinorDiagMatch: function (rowColumn) {
-
   },
 
-  didMajorDiagMatch: function (rowColumn) {
+  didMinorDiagMatch: function(rowColumn) {
+    var mark = gridMethods.getMarkOn(rowColumn);
+    var column = 0;
+    for (var row = 2; row >= 0; row--) {
+      if (gridMethods.grid[row][column].mark !== mark) {
+        return false;
+      }
+      column++;
+    }
+    return true
+  },
+
+  didMajorDiagMatch: function(rowColumn) {
+    var mark = gridMethods.getMarkOn(rowColumn);
+    var column = 0;
+    for (var row = 0; row < 3; row++) {
+      if (gridMethods.grid[row][column].mark !== mark) {
+        return false;
+      }
+      column++;
+    }
+    return true
 
   },
 
-  didAnyDirMatch: function (rowColumn) {
-    console.log(rowColumn)
-    console.log(gridMethods.didRowMatch(rowColumn))
+  didAnyDirMatch: function(rowColumn) {
     if (gridMethods.didRowMatch(rowColumn) ||
     gridMethods.didColumnMatch(rowColumn) ||
     gridMethods.didMinorDiagMatch(rowColumn) ||
@@ -112,7 +117,6 @@ var gridMethods = {
 };
 
 var xTurn = true;
-
 gridMethods.createEmptyGrid();
 
 /*
@@ -134,6 +138,9 @@ var displayGrid = function() {
     for (var column = 0; column < 3; column++) {
       var rowColumn = `${row}-${column}`;
       var mark = gridMethods.getMarkOn(rowColumn);
+      if (mark === null) {
+        mark = '-';
+      }
       var columnElement = document.createElement('th');
 
       columnElement.setAttribute('id', `${rowColumn}`);
@@ -156,13 +163,13 @@ var displayMessage = {
     message.appendChild(winnerMessage);
   },
 
-  illegalMove: function (player) {
+  illegalMove: function(player) {
     var illegalMessage = document.createElement('p');
     illegalMessage.innerHTML = `Player ${player} Committed an illegal move. Please try again.`;
     message.appendChild(illegalMessage);
   },
 
-  yourTurn: function (player) {
+  yourTurn: function(player) {
     var yourTurnMessage = document.createElement('p');
     yourTurnMessage.innerHTML = `It is ${player}'s Turn `;
     message.appendChild(yourTurnMessage);
