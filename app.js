@@ -6,13 +6,18 @@ console.log('app.js loaded!');
 ##########################
 */
 
-var player = {
+var playerMethods = {
   X: {name: 'Ecks', win: 0},
   O: {name: 'Oh', win: 0},
+
+  getName: function(xo) {
+    return playerMethods[xo].name;
+  },
 
   changeName: function(xo, newName) {
     player[xo].name = name;
   },
+
   addWin: function(xo) {
     player[xo].win++;
   }
@@ -162,19 +167,22 @@ var displayMessage = {
 
   winner: function(player) {
     var winnerMessage = document.createElement('p');
-    winnerMessage.innerHTML = `The winner is ${player} player!!!`;
+    var name = playerMethods.getName(player);
+    winnerMessage.innerHTML = `The winner is ${name} player!!!`;
     message.appendChild(winnerMessage);
   },
 
   illegalMove: function(player) {
     var illegalMessage = document.createElement('p');
-    illegalMessage.innerHTML = `Player ${player} Committed an illegal move. Please try again.`;
+    var name = playerMethods.getName(player);
+    illegalMessage.innerHTML = `Player ${name} Committed an illegal move. Please try again.`;
     message.appendChild(illegalMessage);
   },
 
   yourTurn: function(player) {
     var yourTurnMessage = document.createElement('p');
-    yourTurnMessage.innerHTML = `It is ${player}'s Turn `;
+    var name = playerMethods.getName(player);
+    yourTurnMessage.innerHTML = `It is ${name}'s Turn `;
     message.appendChild(yourTurnMessage);
   }
 };
